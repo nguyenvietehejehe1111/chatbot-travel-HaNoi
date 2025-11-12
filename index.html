@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trợ lý du lịch Hà Nội</title>
+</head>
+<body>
+    <h1>Trợ lý du lịch Hà Nội</h1>
+    <input id="userInput" placeholder="Nhập câu hỏi..." style="width:300px"/>
+    <button onclick="askAI()">Hỏi AI</button>
+    <p id="reply"></p>
+
+    <script>
+    async function askAI() {
+        const message = document.getElementById("userInput").value;
+        const response = await fetch("/ask", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message })
+        });
+        const data = await response.json();
+        document.getElementById("reply").innerText = data.reply || ("Lỗi: " + JSON.stringify(data));
+    }
+    </script>
+</body>
+</html>
